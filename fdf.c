@@ -6,14 +6,18 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/06/22 15:57:42 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/06/26 20:54:23 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/fdf.h"
-#include "./Libft/libft.h"
-#include "./Printf/ft_printf.h"
 
+
+void cleaner(char *line, t_map *map)
+{
+	free(line);
+	free(map);
+}
 
 int	check_map(char *filename)
 {
@@ -31,59 +35,88 @@ int	check_map(char *filename)
 
 t_map	*get_dimensions(int fd)
 {
-	int	height;
-	int width;
+	char *line;
 	t_map *map;
 
-	height = 0;
 	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
 	{
 		ft_printf("Error to allocated map");
 		exit(14);
 	}
-	width = ft_strlen(get_next_line(fd));
-	ft_printf("gnl -> %s\n", get_next_line(fd));
-	ft_printf("width antes do loop -> %d\n", width);
-	while (width != 0)
+	line = get_next_line(fd);
+	map->width = ft_strlen(line);
+	while (line)
 	{
-		if (get_next_line(fd) == NULL)
-			break ;
-		ft_printf("gnl inside loop-> %s\n", get_next_line(fd));
-		width = ft_strlen(get_next_line(fd));
-		height++;
+		line = get_next_line(fd);
+		/* if(map->width != ft_strlen(line))
+		{
+			cleaner(line, map);
+			exit(15);
+		} */
+		map->height++;
 	}
-	ft_printf("height -> %d\n", height);
-	map->height = height;
-	map->width = width;
 	map->list = NULL;
 	map->z_max = 0;
 	map->z_min = 0;
 	return(map);
 }
+static t_fdf *init_generate(t_fdf *fdf)
+{
+	
+	fdf->mlx = mlx_init();
+	if (!fdf->mlx)
+	{
+		ft_printf("Error to create graphics");
+		exit(16);
+	}
+	fdf->win = mlx_new_window(fdf->mlx, 700, 800, "Generate - FdF");
+	if (!fdf->win)
+	{
+		ft_printf("Error to create new window");
+		exit(17);
+	}
+	fdf->img = mlx_new_image(fdf->mlx, 700, 800);
+	if (!fdf->img)
+	{
+		ft_printf("Error to create image");
+		exit(14);
+	}
+	fdf->address = mlx_get_data_addr(fdf->img, &fdf->bpp, &fdf->size_line, &fdf->endian);
+	fdf->map = NULL;
+	return (fdf);
+
+}
 
 int main(int argc, char **argv)
 {
 	int	fd;
-	t_map *map;
+	t_fdf *fdf;
 
-	map = NULL;
-	if (argc != 2)
+	fdf = (t_fdf *)malloc(sizeof(t_fdf));
+	if (!fdf)
 	{
-		ft_printf("usage: ./fdf <mapname>.fdf");
+		ft_printf("Error to allocated map");
 		exit(10);
 	}
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
+	if (argc == 2)
 	{
-		ft_printf("Error opening");
-		exit(11);
+		fd = open(argv[1], O_RDONLY);
+		if (fd < 0)
+		{
+			ft_printf("Error opening");
+			exit(11);
+		}
+		if (check_map(argv[1]))
+		{
+			fdf = init_generate(fdf);
+			fdf->map = get_dimensions(fd);
+			mlx_loop(fdf->mlx);
+		}
 	}
-	if (check_map(argv[1]))
-		map = get_dimensions(fd);
 	else
 	{
-		ft_printf("Map error");
+		ft_printf("usage: ./fdf <mapname>.fdf");
 		exit(12);
 	}
 }

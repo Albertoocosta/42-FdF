@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:19:01 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/06/18 16:51:01 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/06/26 20:30:41 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include "../Libft/libft.h"
 # include "../Printf/ft_printf.h"
+# include "../minilibx-linux/mlx.h"
 
 typedef struct	s_point
 {
@@ -29,8 +30,8 @@ typedef struct	s_point
 
 typedef struct	s_map
 {
-	int	height;
-	int width;
+	size_t	height;
+	size_t width;
 	int	***list;
 	int	z_max;
 	int	z_min;
@@ -39,7 +40,15 @@ typedef struct	s_map
 
 typedef struct	s_fdf
 {
-	/* data */
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*address;
+	int	bpp;
+	int	size_line;
+	int	endian;
+	int	steep;
+	t_map	*map;
 }				t_fdf;
 
 #endif
