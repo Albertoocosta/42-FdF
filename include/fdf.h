@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:19:01 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/06/26 20:30:41 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:58:09 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,9 @@ typedef struct	s_fdf
 	int	steep;
 	t_map	*map;
 }				t_fdf;
+
+
+int ft_error(char *message);
+void draw(t_fdf fdf);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/06/26 20:54:23 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:29:06 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,12 @@ t_map	*get_dimensions(int fd)
 
 	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
-	{
-		ft_printf("Error to allocated map");
-		exit(14);
-	}
+		ft_error("Error to allocated map");
 	line = get_next_line(fd);
 	map->width = ft_strlen(line);
 	while (line)
 	{
 		line = get_next_line(fd);
-		/* if(map->width != ft_strlen(line))
-		{
-			cleaner(line, map);
-			exit(15);
-		} */
 		map->height++;
 	}
 	map->list = NULL;
@@ -62,26 +54,16 @@ t_map	*get_dimensions(int fd)
 	return(map);
 }
 static t_fdf *init_generate(t_fdf *fdf)
-{
-	
+{	
 	fdf->mlx = mlx_init();
 	if (!fdf->mlx)
-	{
-		ft_printf("Error to create graphics");
-		exit(16);
-	}
+		ft_error("Error to create graphics");
 	fdf->win = mlx_new_window(fdf->mlx, 700, 800, "Generate - FdF");
 	if (!fdf->win)
-	{
-		ft_printf("Error to create new window");
-		exit(17);
-	}
+		ft_error("Error to create new window");
 	fdf->img = mlx_new_image(fdf->mlx, 700, 800);
 	if (!fdf->img)
-	{
-		ft_printf("Error to create image");
-		exit(14);
-	}
+		ft_error("Error to create image");
 	fdf->address = mlx_get_data_addr(fdf->img, &fdf->bpp, &fdf->size_line, &fdf->endian);
 	fdf->map = NULL;
 	return (fdf);
@@ -95,18 +77,12 @@ int main(int argc, char **argv)
 
 	fdf = (t_fdf *)malloc(sizeof(t_fdf));
 	if (!fdf)
-	{
-		ft_printf("Error to allocated map");
-		exit(10);
-	}
+		ft_error("Error to allocated map");
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
 		if (fd < 0)
-		{
-			ft_printf("Error opening");
-			exit(11);
-		}
+			ft_error("Error to open file");
 		if (check_map(argv[1]))
 		{
 			fdf = init_generate(fdf);
@@ -115,8 +91,5 @@ int main(int argc, char **argv)
 		}
 	}
 	else
-	{
-		ft_printf("usage: ./fdf <mapname>.fdf");
-		exit(12);
-	}
+		ft_error("Too many or too few arguments");
 }
