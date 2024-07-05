@@ -6,47 +6,58 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/06/30 17:29:06 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/07/05 18:04:20 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/fdf.h"
 
 
-void cleaner(char *line, t_map *map)
-{
-	free(line);
-	free(map);
-}
 
-int	check_map(char *filename)
+void matrixfill(t_point *point, char *line, int y, int x)
 {
-	int len;
+	char	**split;
+	char	**data;
+	char	*n;
 
-	len = ft_strlen(filename);
-	if (filename[len - 4] == '.' && filename[len - 3] == 'f' && filename[len - 2] == 'd' && filename[len - 1] == 'f')
-		return (1);
-	else
+	n = "\n";
+	split = ft_split(line, ' ');
+	while (split[x])
 	{
-		ft_printf("File not .fdf");
-		exit(13);
+		if (split[x] == n)
+			break;
+		data = ft_split(split[x], ',');
+		point->z = ft_atoi(data[0]);
+		point->x = x;
+		point->y = y;
+		point->color = 0xffffff;
+		free(split[x]);
+		x++;
 	}
 }
 
 t_map	*get_dimensions(int fd)
 {
-	char *line;
-	t_map *map;
-
+	int		x;
+	char	*line;
+	t_map	*map;
+	
+	x = 0;
 	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
 		ft_error("Error to allocated map");
 	line = get_next_line(fd);
-	map->width = ft_strlen(line);
+	map->width = ft_words(line, ' ');
+	map->height = 0;
+	map->coord = malloc(map->height * sizeof(t_point *));
+	if (!map->coord)
+		ft_error("Error to allocated map->coord");
 	while (line)
 	{
 		line = get_next_line(fd);
+		matrixfill(map->coord[map->height], line, map->height, x);
 		map->height++;
+		free(line);
 	}
 	map->list = NULL;
 	map->z_max = 0;

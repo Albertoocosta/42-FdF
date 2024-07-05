@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_words.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/30 17:22:23 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/07/05 16:27:20 by cda-fons         ###   ########.fr       */
+/*   Created: 2024/07/04 20:42:13 by cda-fons          #+#    #+#             */
+/*   Updated: 2024/07/04 20:45:36 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/fdf.h"
+#include "libft.h"
 
-int ft_error(char *message)
+size_t	ft_words(char *str, char c)
 {
-	ft_printf("%s\n", message);
-	exit(-1);
-}
-int	check_map(char *filename)
-{
-	int len;
+	int	i;
+	int	words;
 
-	len = ft_strlen(filename);
-	if (filename[len - 4] == '.' && filename[len - 3] == 'f' && filename[len - 2] == 'd' && filename[len - 1] == 'f')
-		return (1);
-	else
-		ft_error("File not .fdf");
-	return(0);
+	i = 0;
+	words = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			i++;
+		else
+		{
+			words++;
+			while (str[i] && str[i] != c)
+			{
+				i++;
+			}
+		}
+	}
+	return (words);
 }

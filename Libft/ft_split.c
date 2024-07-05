@@ -6,12 +6,11 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:45:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/04/30 19:22:53 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/07/04 20:45:33 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 size_t	i_words(char *str, char c)
 {

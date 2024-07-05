@@ -4,7 +4,7 @@ MLX = minilibx-linux/libmlx.a
 LIBFT = Libft/libft.a
 PRINTF = Printf/libftprintf.a
 FLAGS = -Lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -Wall -Werror -Wextra
-SRCS = fdf.c 
+SRCS = fdf.c utils.c
 
 all: ${NAME}
 
@@ -22,6 +22,5 @@ ${NAME}: ${MLX} ${LIBFT} ${PRINTF}
 
 clean:
 	@rm ${NAME}
+	@echo ALL CLEAR
 re: clean all
-
-.PHONY : all clean fclean re
