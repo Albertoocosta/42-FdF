@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:22:23 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/07/05 16:27:20 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/07/11 20:09:26 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,14 @@ int	check_map(char *filename)
 	else
 		ft_error("File not .fdf");
 	return(0);
+}
+void	freematrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+		free(matrix[i++]);
+	if(matrix)
+		free(matrix);
 }
