@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:19:01 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/07/11 19:57:45 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/07/16 20:37:14 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ int ft_error(char *message);
 void draw(t_fdf fdf);
 int	check_map(char *filename);
 void	freematrix(char **matrix);
+int	getheight(int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/07/11 20:53:20 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:06:51 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,29 @@ void matrixfill(t_point **point, char *line, int y)
 	n = "\n";
 	x = 0;
 	split = ft_split(line, ' ');
-	while (split[x])
+	while (split[y][x])
 	{
-		if (split[x] == NULL)
+		if (split[y][x] == '\n')
 			break;
-		data = ft_split(split[x], ',');
-		point[x]->z = ft_atoi(data[0]);
-		point[x]->x = x;
-		point[x]->y = y;
+		data = ft_split(&split[y][x], ',');
+		point[y][x].z = ft_atoi(data[0]);
+		point[y][x].x = x;
+		point[y][x].y = y;
 		//printf("%d\n", x);
 		//printf("x,y,z = %d,%d,%d\n ", point->x, point->y, point->z);
 		/* if (data[1])
 			point->color = ft_atoi(data[1]); TODO: Tenho que fazer um atoibase
 		else */
-		point[x]->color = 0xffffff;
+		point[y][x].color = 0xffffff;
 		x++;
+		//******olha aqui
 		freematrix(data);
 		//printf("%s\n", split[x]);
 	}
 	freematrix(split);
 }
 
-t_map	*get_dimensions(int fd)
+t_map	*get_dimensions(int fd, char *path)
 {
 	char	*line;
 	t_map	*map;
@@ -64,16 +65,16 @@ t_map	*get_dimensions(int fd)
 	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
 		ft_error("Error to allocated map");
-	map->coord = (t_point**)malloc(sizeof(t_point*));
+	map->height = getheight(fd);
+	map->coord = (t_point**)malloc(sizeof(t_point*) * (map->height + 1));
+	close(fd);
+	fd = open(path, O_RDONLY);
 	line = get_next_line(fd);
-	map->width = ft_words(line, ' ');
 	map->height = 0;
+	map->width = ft_words(line, ' ');
 	while (line)
 	{
-		//printf("%zu w %zu h\n", map->width, map->height);
-		//achar primeiro as dimensoes do mapa para depois alocar as linhas
-
-		map->coord[map->height] = malloc(sizeof(t_point *));
+		map->coord[map->height] = malloc(sizeof(t_point) * (map->width + 1));
 		matrixfill(&map->coord[map->height], line, map->height);
 		map->height++;
 		free(line);
@@ -98,7 +99,6 @@ static t_fdf *init_generate(t_fdf *fdf)
 	fdf->address = mlx_get_data_addr(fdf->img, &fdf->bpp, &fdf->size_line, &fdf->endian);
 	fdf->map = NULL;
 	return (fdf);
-
 }
 
 
@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 	int	fd;
 	t_fdf *fdf;
 
-	fdf = (t_fdf *)malloc(sizeof(t_fdf));
+	fdf = (t_fdf *)ft_calloc(sizeof(t_fdf), 2);
 	if (!fdf)
 		ft_error("Error to allocated map");
 	if (argc == 2)
@@ -118,10 +118,11 @@ int main(int argc, char **argv)
 		if (check_map(argv[1]))
 		{
 			fdf = init_generate(fdf);
-			fdf->map = get_dimensions(fd);
+			fdf->map = get_dimensions(fd, argv[1]);
 			printCharMatrix(fdf->map->coord, fdf->map->height, fdf->map->width);
 			mlx_loop(fdf->mlx);
 		}
+	close(fd);
 	}
 	else
 		ft_error("Too many or too few arguments");

@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:22:23 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/07/11 20:09:26 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/07/16 20:38:24 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,20 @@ void	freematrix(char **matrix)
 		free(matrix[i++]);
 	if(matrix)
 		free(matrix);
+}
+
+int	getheight(int fd)
+{
+	char *line;
+	int	height;
+
+	height = 0;	
+	line = get_next_line(fd);
+	while(line)
+	{
+		height++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (height);
 }
