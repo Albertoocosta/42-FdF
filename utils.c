@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:22:23 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/07/16 20:38:24 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:53:46 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ void	freematrix(char **matrix)
 
 	i = 0;
 	while (matrix[i])
-		free(matrix[i++]);
-	if(matrix)
-		free(matrix);
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
 }
 
 int	getheight(int fd)

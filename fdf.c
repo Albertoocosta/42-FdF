@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/07/16 21:06:51 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:00:18 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_map	*get_dimensions(int fd, char *path)
 	map->width = ft_words(line, ' ');
 	while (line)
 	{
-		map->coord[map->height] = malloc(sizeof(t_point) * (map->width + 1));
+		map->coord[map->height] = malloc(sizeof(t_point) * (map->width) + 1);
 		matrixfill(&map->coord[map->height], line, map->height);
 		map->height++;
 		free(line);
