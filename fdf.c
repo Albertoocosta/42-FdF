@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/07/26 21:00:18 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/08/01 20:43:14 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ void matrixfill(t_point **point, char *line, int y)
 	char	**data;
 	char	*n;
 	int		x;
-
+	
 	n = "\n";
 	x = 0;
 	split = ft_split(line, ' ');
-	while (split[y][x])
+	while (split[x])
 	{
-		if (split[y][x] == '\n')
+		if (split[x][0] == '\n')
 			break;
-		data = ft_split(&split[y][x], ',');
+		data = ft_split(split[x], ',');
 		point[y][x].z = ft_atoi(data[0]);
 		point[y][x].x = x;
 		point[y][x].y = y;
@@ -49,9 +49,11 @@ void matrixfill(t_point **point, char *line, int y)
 			point->color = ft_atoi(data[1]); TODO: Tenho que fazer um atoibase
 		else */
 		point[y][x].color = 0xffffff;
-		x++;
 		//******olha aqui
 		freematrix(data);
+		x++;
+		/* if (!split[x][0])
+			break; */
 		//printf("%s\n", split[x]);
 	}
 	freematrix(split);
@@ -66,7 +68,7 @@ t_map	*get_dimensions(int fd, char *path)
 	if (!map)
 		ft_error("Error to allocated map");
 	map->height = getheight(fd);
-	map->coord = (t_point**)malloc(sizeof(t_point*) * (map->height + 1));
+	map->coord = (t_point**)malloc(sizeof(t_point **) * (map->height + 1));
 	close(fd);
 	fd = open(path, O_RDONLY);
 	line = get_next_line(fd);
@@ -74,7 +76,7 @@ t_map	*get_dimensions(int fd, char *path)
 	map->width = ft_words(line, ' ');
 	while (line)
 	{
-		map->coord[map->height] = malloc(sizeof(t_point) * (map->width) + 1);
+		map->coord[map->height] = ft_calloc(sizeof(t_point *), ((map->width) + 1));
 		matrixfill(&map->coord[map->height], line, map->height);
 		map->height++;
 		free(line);
