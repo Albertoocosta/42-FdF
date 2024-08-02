@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/08/01 20:43:14 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:36:26 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void printCharMatrix(t_point **matrix, int height, int cols) {
     }
 }
 
-void matrixfill(t_point **point, char *line, int y)
+void matrixfill(t_point *point, char *line, int y)
 {
 	char	**split;
 	char	**data;
@@ -40,15 +40,15 @@ void matrixfill(t_point **point, char *line, int y)
 		if (split[x][0] == '\n')
 			break;
 		data = ft_split(split[x], ',');
-		point[y][x].z = ft_atoi(data[0]);
-		point[y][x].x = x;
-		point[y][x].y = y;
+		point[x].z = ft_atoi(data[0]);
+		point[x].x = x;
+		point[x].y = y;
 		//printf("%d\n", x);
 		//printf("x,y,z = %d,%d,%d\n ", point->x, point->y, point->z);
 		/* if (data[1])
 			point->color = ft_atoi(data[1]); TODO: Tenho que fazer um atoibase
 		else */
-		point[y][x].color = 0xffffff;
+		point[x].color = 0xffffff;
 		//******olha aqui
 		freematrix(data);
 		x++;
@@ -68,7 +68,7 @@ t_map	*get_dimensions(int fd, char *path)
 	if (!map)
 		ft_error("Error to allocated map");
 	map->height = getheight(fd);
-	map->coord = (t_point**)malloc(sizeof(t_point **) * (map->height + 1));
+	map->coord = (t_point**)malloc(sizeof(t_point *) * (map->height + 1));
 	close(fd);
 	fd = open(path, O_RDONLY);
 	line = get_next_line(fd);
@@ -76,13 +76,12 @@ t_map	*get_dimensions(int fd, char *path)
 	map->width = ft_words(line, ' ');
 	while (line)
 	{
-		map->coord[map->height] = ft_calloc(sizeof(t_point *), ((map->width) + 1));
-		matrixfill(&map->coord[map->height], line, map->height);
+		map->coord[map->height] = ft_calloc(sizeof(t_point), ((map->width) + 1));
+		matrixfill(map->coord[map->height], line, map->height);
 		map->height++;
 		free(line);
 		line = get_next_line(fd);
 	}
-	map->list = NULL;
 	map->z_max = 0;
 	map->z_min = 0;
 	return(map);
