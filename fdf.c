@@ -6,24 +6,12 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/08/02 16:36:26 by cda-fons         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:09:57 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/fdf.h"
-
-
 #include <stdio.h>
-
-// Função para imprimir a matriz 2D de caracteres
-void printCharMatrix(t_point **matrix, int height, int cols) {
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < cols; j++) {
-            printf("x,y,z = %d,%d,%d\n ", matrix[i][j].x, matrix[i][j].y, matrix[i][j].z);
-        }
-        printf("\n");
-    }
-}
 
 void matrixfill(t_point *point, char *line, int y)
 {
@@ -43,18 +31,13 @@ void matrixfill(t_point *point, char *line, int y)
 		point[x].z = ft_atoi(data[0]);
 		point[x].x = x;
 		point[x].y = y;
-		//printf("%d\n", x);
-		//printf("x,y,z = %d,%d,%d\n ", point->x, point->y, point->z);
-		/* if (data[1])
-			point->color = ft_atoi(data[1]); TODO: Tenho que fazer um atoibase
-		else */
-		point[x].color = 0xffffff;
-		//******olha aqui
+		//printf("x,y,z = %d,%d,%d\n ", point[x].x, point[x].y, point[x].z);
+		if (data[1])
+			point[x].color = ft_atoi(data[1]);
+		else
+			point[x].color = 0xffffff;
 		freematrix(data);
 		x++;
-		/* if (!split[x][0])
-			break; */
-		//printf("%s\n", split[x]);
 	}
 	freematrix(split);
 }
@@ -120,7 +103,6 @@ int main(int argc, char **argv)
 		{
 			fdf = init_generate(fdf);
 			fdf->map = get_dimensions(fd, argv[1]);
-			printCharMatrix(fdf->map->coord, fdf->map->height, fdf->map->width);
 			mlx_loop(fdf->mlx);
 		}
 	close(fd);
