@@ -13,14 +13,12 @@
 #include "./include/fdf.h"
 #include <stdio.h>
 
-void matrixfill(t_point *point, char *line, int y)
+void matrixfill(t_point **point, char *line, int y)
 {
 	char	**split;
 	char	**data;
-	char	*n;
 	int		x;
 	
-	n = "\n";
 	x = 0;
 	split = ft_split(line, ' ');
 	while (split[x])
@@ -28,60 +26,70 @@ void matrixfill(t_point *point, char *line, int y)
 		if (split[x][0] == '\n')
 			break;
 		data = ft_split(split[x], ',');
-		point[x].z = ft_atoi(data[0]);
-		point[x].x = x;
-		point[x].y = y;
-		//printf("x,y,z = %d,%d,%d\n ", point[x].x, point[x].y, point[x].z);
+		point[y][x].z = ft_atoi(data[0]);
+		point[y][x].x = x;
+		point[y][x].y = y;
+		point[y][x].last = 0;
 		if (data[1])
-			point[x].color = ft_atoi(data[1]);
+			point[y][x].color = ft_atoi(data[1]);
 		else
-			point[x].color = 0xffffff;
+			point[y][x].color = 0xffffff;
 		freematrix(data);
 		x++;
 	}
+	point[y][x - 1].last = 1;
 	freematrix(split);
 }
 
-t_map	*get_dimensions(int fd, char *path)
+void	get_dimensions(t_fdf *fdf, int fd, char *path)
 {
 	char	*line;
-	t_map	*map;
-	
-	map = (t_map *)malloc(sizeof(t_map));
-	if (!map)
-		ft_error("Error to allocated map");
-	map->height = getheight(fd);
-	map->coord = (t_point**)malloc(sizeof(t_point *) * (map->height + 1));
+
+	fdf->height = getheight(fd);
+	fdf->coord = (t_point**)malloc(sizeof(t_point *) * (fdf->height + 1));
 	close(fd);
 	fd = open(path, O_RDONLY);
 	line = get_next_line(fd);
-	map->height = 0;
-	map->width = ft_words(line, ' ');
+	fdf->height = 0;
+	fdf->width = ft_words(line, ' ');
 	while (line)
 	{
-		map->coord[map->height] = ft_calloc(sizeof(t_point), ((map->width) + 1));
-		matrixfill(map->coord[map->height], line, map->height);
-		map->height++;
+		fdf->coord[fdf->height] = (t_point *)ft_calloc(sizeof(t_point), ((fdf->width) + 1));
+		matrixfill(fdf->coord, line, fdf->height);
+		fdf->height++;
 		free(line);
 		line = get_next_line(fd);
 	}
-	map->z_max = 0;
-	map->z_min = 0;
-	return(map);
+	for (int cont1 = 0; fdf->coord[cont1]; cont1++)
+	{
+		for (int cont2 =0; fdf->coord[cont2]; cont2++)
+		{
+			printf("%d", fdf->coord[cont2]->z);
+			if (fdf->coord[cont2]->last != 1)
+				printf(" ");
+		}
+		printf("\n");
+	}
+
 }
 static t_fdf *init_generate(t_fdf *fdf)
 {	
+	fdf->height = 0;
+	fdf->width = 0;
+	fdf->coord = NULL;
+	fdf->angle = 0.523599;
+	fdf->win_x = WIDTH;
+	fdf->win_y = HEIGHT;
+	fdf->offset_x = fdf->win_x / 3;
+	fdf->offset_y = fdf->win_y / 3;
+	fdf->scale = 20;
+	fdf->scale_z = 1;
 	fdf->mlx = mlx_init();
 	if (!fdf->mlx)
 		ft_error("Error to create graphics");
-	fdf->win = mlx_new_window(fdf->mlx, 700, 800, "Generate - FdF");
+	fdf->win = mlx_new_window(fdf->mlx, fdf->win_x, fdf->win_y, "Generate - FdF");
 	if (!fdf->win)
 		ft_error("Error to create new window");
-	fdf->img = mlx_new_image(fdf->mlx, 700, 800);
-	if (!fdf->img)
-		ft_error("Error to create image");
-	fdf->address = mlx_get_data_addr(fdf->img, &fdf->bpp, &fdf->size_line, &fdf->endian);
-	fdf->map = NULL;
 	return (fdf);
 }
 
@@ -102,7 +110,9 @@ int main(int argc, char **argv)
 		if (check_map(argv[1]))
 		{
 			fdf = init_generate(fdf);
-			fdf->map = get_dimensions(fd, argv[1]);
+			get_dimensions(fdf, fd, argv[1]);
+			draw(fdf->coord, fdf);
+			mlx_key_hook(fdf->win, key_handler, fdf);
 			mlx_loop(fdf->mlx);
 		}
 	close(fd);

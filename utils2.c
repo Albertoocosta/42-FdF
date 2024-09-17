@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,52 +12,19 @@
 
 #include "./include/fdf.h"
 
-int ft_error(char *message)
+int	modnum(int nbr)
 {
-	ft_printf("%s\n", message);
-	exit(-1);
+	if (nbr < 0)
+		nbr = -nbr;
+	return (nbr);
 }
-int	check_map(char *filename)
+int	maxnum(int nbr1, int nbr2)
 {
-	int len;
+	int nbr;
 
-	len = ft_strlen(filename);
-	if (filename[len - 4] == '.' && filename[len - 3] == 'f' && filename[len - 2] == 'd' && filename[len - 1] == 'f')
-		return (1);
+	nbr = nbr1 - nbr2;
+	if (nbr > 0)
+		return (nbr1);
 	else
-		ft_error("File not .fdf");
-	return(0);
-}
-void	freematrix(char **matrix)
-{
-	int y;
-
-	y = 0;
-	while(matrix[y])
-	{
-		free(matrix[y]);
-		y++;
-	}
-	free(matrix);
-}
-
-int	getheight(int fd)
-{
-	char *line;
-	int	height;
-
-	height = 0;	
-	line = get_next_line(fd);
-	while(line)
-	{
-		height++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	return (height);
-}
-void	isometric(t_point *point, double angle)
-{
-	point->x = (point->x - point->y) * cos(angle);
-	point->y = (point->x - point->y) * sin(angle) - point->z;
+		return (nbr2);
 }

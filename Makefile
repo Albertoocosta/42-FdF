@@ -3,8 +3,8 @@ NAME = generate
 MLX = minilibx-linux/libmlx.a
 LIBFT = Libft/libft.a
 PRINTF = Printf/libftprintf.a
-FLAGS = -Lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -Wall -Werror -Wextra
-SRCS = fdf.c utils.c
+FLAGS = -Lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -Wall -Werror -Wextra -no-pie
+SRCS = fdf.c utils.c makeDraw.c key_handler.c utils2.c
 
 all: ${NAME}
 
