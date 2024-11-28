@@ -22,31 +22,48 @@
 # include "../minilibx-linux/mlx.h"
 
 
-# define WIDTH 1080
-# define HEIGHT 800
+# define WHITE 0x00FFFFFF
+# define WIDTH 1920
+# define HEIGHT 1080
+
+typedef struct s_bresenham
+{
+	int	x0;
+	int	y0;
+	int	dx;
+	int	dy;
+	int sx;
+	int	sy;
+	int	err;
+}				t_bresenham;
+
 
 typedef struct	s_point
 {
-	float	x;
-	float	y;
+	int	x;
+	int	y;
 	int z;
-	int last;
 	int color;
 }				t_point;
+
+typedef struct	s_img
+{
+	void	*img;
+	char	*addr;
+	int	img_width;
+	int	img_height;
+	int	bpp;
+	int	line_lenght;
+	int	endian;
+}				t_img;
 
 typedef struct	s_fdf
 {
 	void	*mlx;
 	void	*win;
-	int	scale;
-	int	scale_z;
-	double	angle;
-	int	win_x;
-	int	win_y;
-	int	offset_x;
-	int offset_y;
-	size_t	height;
-	size_t	width;
+	t_img	img;
+	int	height;
+	int	width;
 	t_point	**coord;
 }				t_fdf;
 
@@ -54,12 +71,15 @@ typedef struct	s_fdf
 int	ft_error(char *message);
 int	modnum(int nbr);
 int	maxnum(int nbr1, int nbr2);
+int	input_check(int argc, char *argv);
+int	width_check(t_fdf *fdf, char *clean_line, int map_line, int width_error);
 void	draw(t_point **matrix, t_fdf *fdf);
-void	matrixfill(t_point **point, char *line, int y);
+char	**split_line(char *line);
+void	matrixfill(t_fdf *fdf, int fd);
 int	check_map(char *filename);
-void	freematrix(char **matrix);
-int	getheight(int fd);
+void	freematrix(t_fdf *fdf, int fd, int height, char *message);
+void free_fdf(t_fdf *fdf, int fd, char *message);
 int	key_handler(int key, t_fdf *data);
-void	isometric(t_point *point, double angle);
+void	split_free(char **split);
 
 #endif

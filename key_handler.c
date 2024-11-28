@@ -16,8 +16,6 @@ int	key_handler(int key, t_fdf *data)
 {
 	if (key == 65307)
 		ft_error("Closed");
-	if (key == 126)
-		data->scale += 3;
 	ft_printf("%d\n", key);
 	return (0);
 }

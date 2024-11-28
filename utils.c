@@ -28,36 +28,33 @@ int	check_map(char *filename)
 		ft_error("File not .fdf");
 	return(0);
 }
-void	freematrix(char **matrix)
+void	freematrix(t_fdf *fdf, int fd, int height, char *message)
 {
-	int y;
-
-	y = 0;
-	while(matrix[y])
+	while(height)
 	{
-		free(matrix[y]);
-		y++;
+		if (fdf->coord[height])
+			free(fdf->coord[height]);
+		height--;
 	}
-	free(matrix);
+	free(fdf->coord);
+	free_fdf(fdf, fd, message);
 }
 
-int	getheight(int fd)
+void free_fdf(t_fdf *fdf, int fd, char *message)
 {
-	char *line;
-	int	height;
-
-	height = 0;	
-	line = get_next_line(fd);
-	while(line)
-	{
-		height++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	return (height);
+	free(fdf);
+	close(fd);
+	ft_error(message);
 }
-void	isometric(t_point *point, double angle)
+void	split_free(char **split)
 {
-	point->x = (point->x - point->y) * cos(angle);
-	point->y = (point->x - point->y) * sin(angle) - point->z;
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }
