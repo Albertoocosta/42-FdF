@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.c                                             :+:      :+:    :+:   */
+/*   processors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,10 +12,21 @@
 
 #include "./include/fdf.h"
 
-int	key_handler(int key, t_fdf *data)
+int	set_color(t_point *actual_position, t_point	*next_position)
 {
-	if (key == 65307)
+	if (actual_position->color != WHITE)
+		return (actual_position->color);
+	else if (next_position->color != WHITE)
+		return (next_position->color);
+	return (WHITE);
+}
+
+int	key_handler(int key, void *data)
+{
+	t_fdf	*fdf;
+
+	fdf = (t_fdf *)data;
+	if (key == 65307 || !fdf)
 		ft_error("Closed");
-	ft_printf("%d\n", key);
 	return (0);
 }

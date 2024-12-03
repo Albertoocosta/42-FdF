@@ -4,7 +4,7 @@ FLAGS = -Wall -Wextra -Werror -g
 MLX = minilibx-linux/libmlx.a
 LIBFT = Libft/libft.a
 PRINTF = Printf/libftprintf.a
-SRCS = fdf.c utils.c makeDraw.c key_handler.c utils2.c
+SRCS = fdf.c utils.c make_draw.c processors.c utils2.c scaling_map.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
