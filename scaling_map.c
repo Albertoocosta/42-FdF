@@ -12,7 +12,7 @@
 
 #include "./include/fdf.h"
 
-static void	centralize_map(t_point *actual_position, t_point *next_position)
+void	centralize_map(t_point *actual_position, t_point *next_position)
 {
 	int	x_offset;
 	int	y_offset;
@@ -25,7 +25,7 @@ static void	centralize_map(t_point *actual_position, t_point *next_position)
 	next_position->y += y_offset;
 }
 
-static void	isometric(t_point *position)
+void	isometric(t_point *position)
 {
 	int	x_temp;
 	int	y_temp;
@@ -36,7 +36,7 @@ static void	isometric(t_point *position)
 	position->y = (x_temp + y_temp) * sin(0.523599) - position->z;
 }
 
-static void	diagonal(t_fdf *fdf, t_point *actual_position, t_point *next_position)
+void	diagonal(t_fdf *fdf, t_point *actual_position, t_point *next_position)
 {
 	float	hypo;
 	float	scaling_factor;
@@ -48,6 +48,7 @@ static void	diagonal(t_fdf *fdf, t_point *actual_position, t_point *next_positio
 	next_position->x = round(next_position->x * scaling_factor);
 	next_position->y = round(next_position->y * scaling_factor);
 }
+
 void	map_scaling(t_fdf *fdf, t_point *actual_position, t_point *next_position)
 {
 	diagonal(fdf, actual_position, next_position);

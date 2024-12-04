@@ -26,7 +26,7 @@ void	pointfill(t_point *point, char **clean_line, int height)
 		z_color = ft_split(clean_line[cur_position], ',');
 		point[cur_position].z = ft_atoi(z_color[0]);
 		if (z_color[1])
-			point[cur_position].color = ft_atoi_hex(z_color[1] + 2);
+			point[cur_position].color = ft_atoi_hexa(z_color[1] + 2);
 		else
 			point[cur_position].color = WHITE;
 		split_free(z_color);
@@ -52,7 +52,7 @@ void matrixfill(t_fdf *fdf, int fd)
 		clean_line = split_line(line);
 		fdf->coord[height] = (t_point *)malloc(sizeof(t_point) * fdf->width);
 		if (!fdf->coord)
-			freematrix(fdf->coord, fd, height, "Matrix line error");
+			freematrix(fdf, fd, height, "Matrix line error");
 		pointfill(fdf->coord[height], clean_line, height);
 		height++;
 		split_free(clean_line);
@@ -123,7 +123,6 @@ int main(int argc, char **argv)
 	fdf = init_generate(fdf);
 	get_dimensions(fdf, fd);
 	matrixfill(fdf, fd);
-	draw(fdf->coord, fdf);
 	mlx_key_hook(fdf->win, key_handler, fdf);
 	mlx_loop(fdf->mlx);
 }

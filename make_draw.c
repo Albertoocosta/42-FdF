@@ -25,30 +25,6 @@ t_img	create_img(t_fdf *fdf)
 	return (img);
 }
 
-int	close_window(t_fdf *fdf)
-{
-	int	line;
-
-	line = fdf->height - 1;
-	if (fdf)
-	{
-		mlx_destroy_image(fdf->mlx, fdf->img.img);
-		mlx_destroy_window(fdf->mlx, fdf->win);
-		mlx_destroy_display(fdf->mlx);
-		while (line >= 0)
-		{
-			if (fdf->coord[line])
-				free(fdf->coord[line]);
-			line--;
-		}
-		free(fdf->coord);
-		free(fdf->mlx);
-		free(fdf);
-		exit(EXIT_SUCCESS);
-	}
-	return (0);
-}
-
 static void	bresenham(t_bresenham *point, t_point *actual_position, t_point *next_position)
 {
 	point->dx = abs(next_position->x - actual_position->x);
@@ -74,6 +50,28 @@ void	put_pixel(t_img *img, int x, int y, int color)
 	{
 		pixel = img->addr + ((y * img->line_lenght) + (x * (img->bpp / 8)));
 		*(unsigned int *) pixel = color;
+	}
+}
+
+void	draw_map(t_fdf *fdf)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (y < fdf->height)
+	{
+		x = 0;
+		while (x < fdf->width)
+		{
+			if (x < fdf->width - 1)
+				line_horizon(fdf, x, y);
+			if (y < fdf->height - 1)
+				line_vertical(fdf, x, y);
+			x++;
+		}
+		y++;
 	}
 }
 

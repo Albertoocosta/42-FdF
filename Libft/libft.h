@@ -30,6 +30,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strchr(const char *str, int c);
 void	ft_putchar_fd(char c, int fd);
 int		ft_atoi(const char *str);
+int	ft_atoi_hexa(char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_isalnum(int c);
