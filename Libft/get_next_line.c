@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:30:07 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/06/18 16:26:58 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:14:41 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,3 @@ char	*get_next_line(int fd)
 	cluster = modifycluster(cluster);
 	return (reader);
 }
-

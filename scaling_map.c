@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:08:47 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/08/05 20:44:46 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:09:22 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	diagonal(t_fdf *fdf, t_point *actual_position, t_point *next_position)
 	next_position->y = round(next_position->y * scaling_factor);
 }
 
-void	map_scaling(t_fdf *fdf, t_point *actual_position, t_point *next_position)
+void	map_scaling(t_fdf *fdf, t_point *actual_position,
+		t_point *next_position)
 {
 	diagonal(fdf, actual_position, next_position);
 	isometric(actual_position);

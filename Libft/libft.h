@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 12:07:10 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/07/04 20:46:52 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:15:01 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strchr(const char *str, int c);
 void	ft_putchar_fd(char c, int fd);
 int		ft_atoi(const char *str);
-int	ft_atoi_hexa(char *str);
+int		ft_atoi_hexa(char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_isalnum(int c);

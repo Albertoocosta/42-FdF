@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/08/05 20:55:00 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:12:42 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	pointfill(t_point *point, char **clean_line, int height)
 {
-	int	cur_position;
+	int		cur_position;
 	char	**z_color;
 
 	cur_position = 0;
@@ -34,12 +34,12 @@ void	pointfill(t_point *point, char **clean_line, int height)
 	}
 }
 
-void matrixfill(t_fdf *fdf, int fd)
+void	matrixfill(t_fdf *fdf, int fd)
 {
 	char	*line;
 	char	**clean_line;
 	int		height;
-	
+
 	height = 0;
 	fdf->coord = (t_point **)malloc(sizeof(t_point *) * fdf->height);
 	if (!fdf->coord)
@@ -79,26 +79,18 @@ void	get_dimensions(t_fdf *fdf, int fd)
 		if (map_line_width == 0)
 			map_line_width = ft_words(clean_line, ' ');
 		else
-			width_erro = width_check(fdf, clean_line, map_line_width, width_erro);
+			width_erro = width_check(fdf, clean_line,
+					map_line_width, width_erro);
 		fdf->height++;
 		free(clean_line);
 	}
 	if (width_erro == 1)
 		free_fdf(fdf, fd, "Width error");
 	close(fd);
-	for (int cont1 = 0; fdf->coord[cont1]; cont1++)
-	{
-		for (int cont2 =0; fdf->coord[cont2]; cont2++)
-		{
-			printf("%d", fdf->coord[cont2]->z);
-			printf(" ");
-		}
-		printf("\n");
-	}
-
 }
-static t_fdf *init_generate(t_fdf *fdf)
-{	
+
+static t_fdf	*init_generate(t_fdf *fdf)
+{
 	fdf->height = 0;
 	fdf->width = 0;
 	fdf->coord = NULL;
@@ -107,11 +99,10 @@ static t_fdf *init_generate(t_fdf *fdf)
 	return (fdf);
 }
 
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int	fd;
-	t_fdf *fdf;
+	int		fd;
+	t_fdf	*fdf;
 
 	fd = input_check(argc, argv[1]);
 	fdf = (t_fdf *)ft_calloc(sizeof(t_fdf), 2);

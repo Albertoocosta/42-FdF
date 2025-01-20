@@ -1,6 +1,7 @@
 NAME = fdf
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g -fpie
+FLAGS = -Wall -Wextra -Werror -g
+MLXFLAGS	= -lmlx -lXext -lX11 -lm
 MLX = minilibx-linux/libmlx.a
 LIBFT = Libft/libft.a
 PRINTF = Printf/libftprintf.a
@@ -10,7 +11,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(MLX):
-	make --silent -C minilibx-linux
+	@make -C minilibx-linux
 
 $(LIBFT):
 	@make -C Libft
@@ -18,14 +19,14 @@ $(LIBFT):
 $(PRINTF):
 	@make -C Printf
 
-$(NAME): $(MLX) $(LIBFT) $(PRINTF) $(OBJS)
-	@$(CC) $(FLAGS) $(MLX) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME)
-
+$(NAME): $(OBJS) $(MLX) $(PRINTF) $(LIBFT)
+	$(CC) $(FLAGS) $(OBJS) -L$(MLXFLAGS) $(MLX) $(PRINTF) $(LIBFT) -o $(NAME)
+ 
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
 
 clean: 
-	@rm -rf *.o
+	@rm -rf *.o Libft/*.o Printf/*.o
 
 fclean: clean
 	@rm $(NAME)

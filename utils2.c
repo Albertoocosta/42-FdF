@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:22:23 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/08/01 19:48:46 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:13:28 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	modnum(int nbr)
 
 int	maxnum(int nbr1, int nbr2)
 {
-	int nbr;
+	int	nbr;
 
 	nbr = nbr1 - nbr2;
 	if (nbr > 0)
@@ -59,5 +59,5 @@ char	**split_line(char *line)
 	free(line);
 	splited_line = ft_split(to_clean_line, ' ');
 	free(to_clean_line);
-	return(splited_line);
+	return (splited_line);
 }
