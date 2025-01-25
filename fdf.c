@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/01/20 12:12:42 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/01/25 17:15:55 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,13 @@ int	main(int argc, char **argv)
 	}
 	fdf = init_generate(fdf);
 	get_dimensions(fdf, fd);
+	fd = open(argv[1], O_RDONLY, 0);
 	matrixfill(fdf, fd);
-	mlx_key_hook(fdf->win, key_handler, fdf);
+	fdf->img = create_img(fdf);
+	draw_map(fdf);
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
+	mlx_hook(fdf->win, 17, 0L, close_window, fdf);
+	mlx_key_hook(fdf->win, &key_handler, fdf);
 	mlx_loop(fdf->mlx);
+	exit(EXIT_SUCCESS);
 }
