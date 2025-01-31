@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:08:47 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/01/20 13:09:22 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:35:46 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,13 @@ void	centralize_map(t_point *actual_position, t_point *next_position)
 	next_position->y += y_offset;
 }
 
-void	isometric(t_point *position)
+void isometric(t_point *position)
 {
-	int	x_temp;
-	int	y_temp;
+    int x_temp = position->x;
+    int y_temp = position->y;
 
-	x_temp = position->x;
-	y_temp = position->y;
-	position->x = (x_temp - y_temp) * cos(0.523599);
-	position->y = (x_temp + y_temp) * sin(0.523599) - position->z;
+    position->x = (x_temp - y_temp) * cos(0.523599);
+    position->y = (x_temp + y_temp) * sin(0.523599) - position->z;
 }
 
 void	diagonal(t_fdf *fdf, t_point *actual_position, t_point *next_position)

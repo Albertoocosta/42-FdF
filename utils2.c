@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:22:23 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/01/20 13:13:28 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:38:13 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	input_check(int argc, char *argv)
 
 	if (argc != 2)
 		ft_error("Invalid input.");
+	check_map(argv);
 	fd = open(argv, O_RDONLY, 0);
 	if (fd == -1)
 		ft_error("Error to open the file.");

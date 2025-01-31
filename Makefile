@@ -1,6 +1,7 @@
 NAME = fdf
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
+SANFLAGS = -fsanitize=address -fsanitize=leak -fsanitize=undefined -fno-omit-frame-pointer
 MLXFLAGS	= -lmlx -lXext -lX11 -lm
 MLX = minilibx-linux/libmlx.a
 LIBFT = Libft/libft.a
