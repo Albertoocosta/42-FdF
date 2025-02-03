@@ -2,7 +2,7 @@ NAME = fdf
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 SANFLAGS = -fsanitize=address -fsanitize=leak -fsanitize=undefined -fno-omit-frame-pointer
-MLXFLAGS	= -lmlx -lXext -lX11 -lm
+MLXFLAGS = -lXext -lX11 -lm
 MLX = minilibx-linux/libmlx.a
 LIBFT = Libft/libft.a
 PRINTF = Printf/libftprintf.a
@@ -21,7 +21,7 @@ $(PRINTF):
 	@make -C Printf
 
 $(NAME): $(OBJS) $(MLX) $(PRINTF) $(LIBFT)
-	$(CC) $(FLAGS) $(OBJS) -L$(MLXFLAGS) $(MLX) $(PRINTF) $(LIBFT) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(MLX) $(PRINTF) $(LIBFT) $(MLXFLAGS) -o $(NAME)
  
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
