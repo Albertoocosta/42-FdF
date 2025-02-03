@@ -6,14 +6,14 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/01/31 12:35:22 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:32:38 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/fdf.h"
 #include <stdio.h>
 
-void	pointfill(t_point *point, char **clean_line, int height)
+void	pointfill(t_point *point, char **clean_line, int height, t_fdf *fdf)
 {
 	int		cur_position;
 	char	**z_color;
@@ -24,7 +24,11 @@ void	pointfill(t_point *point, char **clean_line, int height)
 		point[cur_position].x = cur_position;
 		point[cur_position].y = height;
 		z_color = ft_split(clean_line[cur_position], ',');
-		point[cur_position].z = ft_atoi(z_color[0]);
+		printf("fdf->height %i\n", fdf->height);
+		if (fdf->height > 30 && fdf->height < 60)
+			point[cur_position].z = ft_atoi(z_color[0]) * 10;
+		else
+			point[cur_position].z = ft_atoi(z_color[0]);
 		if (z_color[1])
 			point[cur_position].color = ft_atoi_hexa(z_color[1] + 2);
 		else
@@ -53,7 +57,7 @@ void	matrixfill(t_fdf *fdf, int fd)
 		fdf->coord[height] = (t_point *)malloc(sizeof(t_point) * fdf->width);
 		if (!fdf->coord)
 			freematrix(fdf, fd, height, "Matrix line error");
-		pointfill(fdf->coord[height], clean_line, height);
+		pointfill(fdf->coord[height], clean_line, height, fdf);
 		height++;
 		split_free(clean_line);
 	}
@@ -116,20 +120,7 @@ int	main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY, 0);
 	matrixfill(fdf, fd);
 	fdf->img = create_img(fdf);
-	
-	for (int y =0 ; y < fdf->height; y++)
-	{
-		for (int x = 0; x < fdf->width; x++)
-		{
-			printf("%d ", fdf->coord[y][x].z);
-		}
-		printf("\n");
-	}
-	
-
 	draw_map(fdf);
-
-	
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
 	mlx_hook(fdf->win, 17, 0L, close_window, fdf);
 	mlx_key_hook(fdf->win, &key_handler, fdf);

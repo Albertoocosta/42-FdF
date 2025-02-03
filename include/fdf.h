@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:19:01 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/01/25 17:41:45 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:25:20 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FDF_H
 
 # include <unistd.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>
@@ -72,6 +73,7 @@ int		input_check(int argc, char *argv);
 int		width_check(t_fdf *fdf, char *clean_line,
 			int map_line, int width_error);
 void	put_pixel(t_img *img, int x, int y, int color);
+void	pointfill(t_point *point, char **clean_line, int height, t_fdf *fdf);
 void	draw(t_fdf *fdf, t_point *actual_position, t_point *next_position);
 char	**split_line(char *line);
 void	matrixfill(t_fdf *fdf, int fd);

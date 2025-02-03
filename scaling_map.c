@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:08:47 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/01/31 12:35:46 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:43:57 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ void	centralize_map(t_point *actual_position, t_point *next_position)
 	next_position->y += y_offset;
 }
 
-void isometric(t_point *position)
+void	isometric(t_point *position)
 {
-    int x_temp = position->x;
-    int y_temp = position->y;
+	int	x_temp;
+	int	y_temp;
 
-    position->x = (x_temp - y_temp) * cos(0.523599);
-    position->y = (x_temp + y_temp) * sin(0.523599) - position->z;
+	x_temp = position->x;
+	y_temp = position->y;
+	position->x = (x_temp - y_temp) * cos(0.523599);
+	position->y = (x_temp + y_temp) * sin(0.523599) - position->z;
 }
 
 void	diagonal(t_fdf *fdf, t_point *actual_position, t_point *next_position)
@@ -40,11 +42,11 @@ void	diagonal(t_fdf *fdf, t_point *actual_position, t_point *next_position)
 	float	scaling_factor;
 
 	hypo = sqrt(fdf->width * fdf->width + fdf->height * fdf->height);
-	scaling_factor = 0.85 * HEIGHT / hypo;
-	actual_position->x = round(actual_position->x * scaling_factor);
-	actual_position->y = round(actual_position->y * scaling_factor);
-	next_position->x = round(next_position->x * scaling_factor);
-	next_position->y = round(next_position->y * scaling_factor);
+	scaling_factor = 0.90 * HEIGHT / hypo;
+	actual_position->x = actual_position->x * scaling_factor;
+	actual_position->y = actual_position->y * scaling_factor;
+	next_position->x = next_position->x * scaling_factor;
+	next_position->y = next_position->y * scaling_factor;
 }
 
 void	map_scaling(t_fdf *fdf, t_point *actual_position,
