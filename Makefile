@@ -30,7 +30,7 @@ clean:
 	@rm -rf *.o Libft/*.o Printf/*.o
 
 fclean: clean
-	@rm $(NAME)
+	@rm -rf $(NAME)
 	@echo ALL CLEAR
 
 re: fclean all
