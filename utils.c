@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:22:23 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/01/20 13:12:30 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:03:58 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,15 @@
 
 int	ft_error(char *message)
 {
-	ft_printf("%s\n", message);
+	int	i;
+
+	i = 0;
+	while (message[i])
+	{
+		write(2, &message[i], 1);
+		i++;
+	}
+	wirte(2, "\n", 1);
 	exit(-1);
 }
 

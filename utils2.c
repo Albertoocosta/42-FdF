@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:22:23 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/03 16:12:19 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:22:30 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	input_check(int argc, char *argv)
 
 int	width_check(t_fdf *fdf, char *clean_line, int map_line, int width_error)
 {
+	if (!ft_words(clean_line, ' '))
+		width_error = 1;
 	fdf->width = ft_words(clean_line, ' ');
 	if (map_line != fdf->width)
 		width_error = 1;

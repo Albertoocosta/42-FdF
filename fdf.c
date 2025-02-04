@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/04 12:10:45 by alberto          ###   ########.fr       */
+/*   Updated: 2025/02/04 17:36:07 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	pointfill(t_point *point, char **clean_line, int height, t_fdf *fdf)
 		point[cur_position].x = cur_position;
 		point[cur_position].y = height;
 		z_color = ft_split(clean_line[cur_position], ',');
-		if (fdf->height > 30 && fdf->height < 60)
+		if (fdf->height > 26 && fdf->height < 60)
 			point[cur_position].z = ft_atoi(z_color[0]) * 10;
 		else
 			point[cur_position].z = ft_atoi(z_color[0]);
@@ -79,7 +79,7 @@ void	get_dimensions(t_fdf *fdf, int fd)
 			break ;
 		clean_line = ft_strtrim(line, "\n");
 		free(line);
-		if (map_line_width == 0)
+		if (map_line_width == 0 && ft_words(clean_line, ' '))
 			map_line_width = ft_words(clean_line, ' ');
 		else
 			width_erro = width_check(fdf, clean_line,

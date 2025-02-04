@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:22:23 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/03 19:07:20 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:03:42 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	line_horizon(t_fdf *fdf, int x, int y)
 	t_point	actual_position;
 	t_point	next_position;
 
+	ft_memset(&actual_position, 0, sizeof(t_point));
+	ft_memset(&next_position, 0, sizeof(t_point));
 	actual_position.x = fdf->coord[y][x].x;
 	actual_position.y = fdf->coord[y][x].y;
 	actual_position.z = fdf->coord[y][x].z;
@@ -76,6 +78,8 @@ void	line_vertical(t_fdf *fdf, int x, int y)
 	t_point	actual_position;
 	t_point	next_position;
 
+	ft_memset(&actual_position, 0, sizeof(t_point));
+	ft_memset(&next_position, 0, sizeof(t_point));
 	actual_position.x = fdf->coord[y][x].x;
 	actual_position.y = fdf->coord[y][x].y;
 	actual_position.z = fdf->coord[y][x].z;
