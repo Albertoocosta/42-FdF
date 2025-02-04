@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:12:43 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/03 19:32:38 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/02/04 12:10:45 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	pointfill(t_point *point, char **clean_line, int height, t_fdf *fdf)
 		point[cur_position].x = cur_position;
 		point[cur_position].y = height;
 		z_color = ft_split(clean_line[cur_position], ',');
-		printf("fdf->height %i\n", fdf->height);
 		if (fdf->height > 30 && fdf->height < 60)
 			point[cur_position].z = ft_atoi(z_color[0]) * 10;
 		else
@@ -93,14 +92,10 @@ void	get_dimensions(t_fdf *fdf, int fd)
 	close(fd);
 }
 
-static t_fdf	*init_generate(t_fdf *fdf)
+void	init_generate(t_fdf *fdf)
 {
-	fdf->height = 0;
-	fdf->width = 0;
-	fdf->coord = NULL;
 	fdf->mlx = mlx_init();
-	fdf->win = mlx_new_window(fdf->mlx, WIDTH, HEIGHT, "FdF");
-	return (fdf);
+	fdf->win = mlx_new_window(fdf->mlx, WIDTH, HEIGHT, "Fdf");
 }
 
 int	main(int argc, char **argv)
@@ -115,8 +110,9 @@ int	main(int argc, char **argv)
 		close(fd);
 		ft_error("Error to allocated map");
 	}
-	fdf = init_generate(fdf);
+	ft_memset(fdf, 0, sizeof(t_fdf));
 	get_dimensions(fdf, fd);
+	init_generate(fdf);
 	fd = open(argv[1], O_RDONLY, 0);
 	matrixfill(fdf, fd);
 	fdf->img = create_img(fdf);
